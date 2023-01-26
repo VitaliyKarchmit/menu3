@@ -34,12 +34,8 @@ class MenuViewSet(viewsets.ModelViewSet):
             return queryset.filter(food__is_special = is_special).distinct()
 
         def filter_topping_name(self, queryset, name, value):
-            print(queryset)
             topping_name = self.request.query_params.getlist('topping_name')
-            print(topping_name)
             query = reduce(operator.or_, (Q(food__topping__name = item) for item in topping_name))
-            print('QUERY', query)
-
             return queryset.filter(query).distinct()    
 
         class Meta:
